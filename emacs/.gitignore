@@ -1,0 +1,8 @@
+*
+
+!custom-modules/
+!custom-modules/*
+!init.el
+!early-init.el
+!Makefile
+!.gitignore
