@@ -1,0 +1,36 @@
+---
+colors:
+  cursor:
+    cursor: '#d8dee9'
+    text: '#191919'
+  primary:
+    background: '#191919'
+    foreground: '#d8dee9'
+  vi_mode_cursor:
+    cursor: CellForeground
+    text: CellBackground
+cursor:
+  style: Underline
+  unfocused_hollow: true
+  vi_mode_style: Block
+env:
+  TERM: alacritty
+font:
+  normal:
+    family: JetBrains Mono
+    style: Regular
+  size: 15
+selection:
+  save_to_clipboard: true
+window:
+  class:
+    general: Alacritty
+    instance: Alacritty
+  dimensions:
+    columns: 100
+    lines: 35
+  dynamic_padding: false
+  dynamic_title: true
+  gtk_theme_variant: None
+  opacity: 0.7
+  title: Alacritty

@@ -1,0 +1,45 @@
+# List Aliases
+if which exa 2>&1 >/dev/null; then
+    # Use exa if available
+    alias ls='exa'
+    alias ll='exa -lh --git --group-directories-first'
+else
+    alias ll='ls -lh'
+fi
+alias lla='ll -a'
+
+# Adding on interactivity
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+# Directory shortcuts
+alias ..='cd ..'
+
+# App launch shortcuts
+alias nv='nvim'
+alias snv='sudo nvim'
+alias z='zathura'
+
+# Make it look nicer
+alias grep='grep --color=auto'
+alias df='df -h'
+alias free='free -m'
+
+# YoutubeDL
+alias ytdl='youtube-dl -ic --add-metadata --embed-subs --all-subs'
+
+# Common Lisp REPLs
+if which sbcl 2>&1 >/dev/null; then
+    alias sbcl='rlwrap sbcl'
+
+    if which ros 2>&1 >/dev/null; then
+        alias rosrun='rlwrap ros run'
+        alias cl='rlwrap ros run'
+    fi
+else
+    alias cl='sbcl'
+fi
+
+# Make
+alias pmake='time nice make -j$(nproc) --load-average=$(nproc)'

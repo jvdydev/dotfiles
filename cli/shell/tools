@@ -1,0 +1,13 @@
+# Env vars
+export EDITOR="nvim"
+export VISUAL="emacs"
+export LAUNCHER="rofi -show run"
+export DMENU="rofi -dmenu"
+export READER="zathura"
+export BROWSER="firefox"
+export PAGER="less"
+
+export BG_SETTER="/usr/bin/feh --no-fehbg --bg-max"
+
+# Disable .NET cli telemetry
+export DOTNET_CLI_TELEMETRY_OPTOUT=1

@@ -1,0 +1,12 @@
+#
+# path - Additional path exports
+#
+
+# Local bin directory
+export PATH=$PATH:$HOME/.local/bin
+# Rust
+export PATH=$PATH:$HOME/.cargo/bin
+# Common Lisp (roswell)
+export PATH=$PATH:$HOME/.roswell/bin
+# Go
+export PATH=$PATH:$HOME/go/bin
