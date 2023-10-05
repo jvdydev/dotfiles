@@ -20,7 +20,8 @@
 ;;;; General Definer
 (general-create-definer judy-leader-keys
                         :keymaps '(normal insert visual emacs)
-                        :prefix "SPC")
+                        :prefix "SPC"
+                        :global-prefix "C-SPC")
 ;;;; Leader-Map
 (judy-leader-keys
   "b" '(:ignore t :which-key "buffer")
