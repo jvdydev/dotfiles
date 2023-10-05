@@ -75,6 +75,8 @@
 (crafted-ide-configure-tree-sitter '(protobuf))
 (require 'crafted-lisp-config)
 (require 'crafted-org-config)
+(customize-set-variable 'crafted-startup-module-list
+                        '(crafted-startup-recentf crafted-startup-projects))
 (require 'crafted-startup-config)
 
 ;; Custom modules
