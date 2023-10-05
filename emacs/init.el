@@ -72,6 +72,7 @@
 (require 'crafted-completion-config)
 (require 'crafted-evil-config)
 (require 'crafted-ide-config)
+(crafted-ide-configure-tree-sitter '(protobuf))
 (require 'crafted-lisp-config)
 (require 'crafted-org-config)
 (require 'crafted-startup-config)
