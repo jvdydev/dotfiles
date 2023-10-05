@@ -52,6 +52,8 @@
 (add-to-list 'package-selected-packages 'smartparens)
 (add-to-list 'package-selected-packages 'diff-hl)
 
+(add-to-list 'package-selected-packages 'markdown-mode)
+
 ;; Programming modes
 (add-to-list 'package-selected-packages 'glsl-mode)
 (add-to-list 'package-selected-packages 'clang-format)
