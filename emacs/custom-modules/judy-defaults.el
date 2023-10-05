@@ -17,6 +17,9 @@
 (customize-set-variable 'global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode t)
 
+;; Single dired-buffer
+(customize-set-variable 'dired-kill-when-opening-new-dired-buffer t)
+
 ;;; Editing
 ;; Helping with visual things
 (global-prettify-symbols-mode t)
