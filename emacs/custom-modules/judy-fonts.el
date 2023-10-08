@@ -38,7 +38,7 @@ Unused."
 
 (defun judy-fonts--update-font ()
   "Update font configuration."
-  (when (x-list-fonts judy-fonts-default-font)
+  (when (and window-system (x-list-fonts judy-fonts-default-font))
     (set-face-attribute 'default nil
                         :family judy-fonts-default-font
                         :height judy-fonts-default-font-size)
@@ -48,7 +48,7 @@ Unused."
     (set-face-attribute 'variable-pitch nil
                         :family judy-fonts-variable-pitch-font
                         :height 1.0)) ; height scaling
-  (when (x-list-fonts "Noto Color Emoji")
+  (when (and window-system (x-list-fonts "Noto Color Emoji"))
     (set-fontset-font t
                       (if (version< emacs-version "28.1")
                           '(#x1f300 . #x1fad0)
@@ -57,9 +57,8 @@ Unused."
                       nil
                       'prepend)))
 
-;; Ensure update is called on require if running in a window system
-(when window-system
-  (judy-fonts--update-font))
+;; Run font updates on initial require
+(judy-fonts--update-font)
 
 (provide 'judy-fonts)
 ;;; judy-fonts.el ends here
