@@ -1,10 +1,9 @@
-;;; early-init.el --- Bootstrapping Crafted Emacs -*- lexical-binding: t; -*-
+;;; early-init.el --- Early initialisation -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;; Early init.
-;; Set up deferred native compilation, dark-theme by default and GC opts.
-;; Bootstrap Crafted Emacs early-init.
+;; Set up deferred native compilation, packages, dark-theme by default and GC opts.
 
 ;;; Code:
 
@@ -18,7 +17,25 @@
 
 (add-hook 'emacs-startup-hook #'my/post-startup)
 
-;;; Native Compilation
+;;; package.el
+(require 'package)
+
+(when (version< emacs-version "28")
+  (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(add-to-list 'package-archives '("stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
+(customize-set-variable 'package-archive-priorities
+                        '(("gnu"    . 99)
+                          ("nongnu" . 80)
+                          ("stable" . 70)
+                          ("melpa"  . 0)))
+
+(package-initialize)
+(unless package-archive-contents
+    (package-refresh-contents))
+
+;;; (Native) Compilation and loading
 (when (featurep 'native-compile)
   (setq native-comp-async-report-warnings-errors nil)
   (setq native-comp-deferred-compilation t)
@@ -26,27 +43,10 @@
                (expand-file-name ".cache/eln-cache/"
                                  user-emacs-directory)))
 
-;;; Crafted Emacs
-(defconst my/crafted-emacs-branch "craftedv2RC1"
-  "Branch to clone (does not update branch if already cloned).")
+(customize-set-variable 'load-prefer-newer t)
 
-(defvar crafted-emacs-home
-  (expand-file-name "crafted-emacs"
-                    (file-name-directory load-file-name))
-  "Crafted Emacs Home (overwritten in early-init.el).")
-
-;; Ensure crafted-emacs-home exists
-(make-directory crafted-emacs-home t)
-
-(when (directory-empty-p crafted-emacs-home)
-  (message "Cloning crafted-emacs ...")
-  (shell-command-to-string
-   (format "git clone https://github.com/jvdydev/crafted-emacs -b %s %s"
-           my/crafted-emacs-branch
-           crafted-emacs-home)))
-
-(load (expand-file-name "modules/crafted-early-init-config.el"
-                        crafted-emacs-home))
+;;; Modules
+(add-to-list 'load-path (expand-file-name "modules" user-emacs-directory))
 
 ;;; Load a dark theme to avoid flashing on load
 ;; On Emacs 28+: Modus Themes is built-in and loaded, otherwise deeper-blue

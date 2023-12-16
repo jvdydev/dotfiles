@@ -1,7 +1,9 @@
 *
 
-!custom-modules/
-!custom-modules/*
+!eshell/
+!eshell/*
+!modules/
+!modules/*
 !init.el
 !early-init.el
 !Makefile

@@ -43,3 +43,6 @@ fi
 
 # Make
 alias pmake='time nice make -j$(nproc) --load-average=$(nproc)'
+
+# Hyprland blue-light shader
+alias bls='hyprctl keyword decoration:screen_shader ~/.config/hypr/blue-light-filter.glsl'

@@ -8,6 +8,15 @@
 ;; Default to home
 (setq default-directory "~/")
 
+(setq sentence-end-double-space nil)
+
+;; Fast y/n
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; History
+(add-hook 'after-init-hook #'recentf-mode)
+(savehist-mode 1)
+
 ;; Disable warnings
 (customize-set-variable 'byte-compile-warnings '(cl-functions))
 (customize-set-variable 'large-file-warning-threshold nil)
@@ -17,13 +26,29 @@
 (customize-set-variable 'global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode t)
 
-;; Single dired-buffer
+;; Dired
 (customize-set-variable 'dired-kill-when-opening-new-dired-buffer t)
+(customize-set-variable 'dired-auto-revert-buffer t)
+
+;; Popup Buffer behaviour
+(customize-set-variable 'switch-to-buffer-in-dedicated-window 'pop)
+(customize-set-variable 'switch-to-buffer-obey-display-actions t)
 
 ;;; Editing
+;; Deleting and the kill-ring
+(delete-selection-mode)
+(customize-set-variable 'kill-do-not-save-duplicates t)
+
 ;; Helping with visual things
 (global-prettify-symbols-mode t)
 (global-hl-line-mode)
+
+;; Scrolling
+(setq auto-window-vscroll nil)
+(customize-set-variable 'fast-but-imprecise-scrolling t)
+(customize-set-variable 'scroll-conservatively 101)
+(customize-set-variable 'scroll-margin 0)
+(customize-set-variable 'scroll-preserve-screen-position t)
 
 ;; 80 cols inidicator
 (setq-default fill-column 80)
@@ -36,7 +61,7 @@
 (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 
 ;; Default editing
-(setq-default tab-width 2)
+(setq-default tab-width 4)
 (setq-default evil-shift-width tab-width)
 (setq-default indent-tabs-mode nil)
 

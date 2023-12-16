@@ -12,87 +12,124 @@
 (when (file-exists-p custom-file)
   (load custom-file nil :nomessage))
 
-;;; Bootstrap Crafted Emacs
-(load (expand-file-name "modules/crafted-init-config.el" crafted-emacs-home))
+;;; Helper macros
+(defmacro unless-windows (&rest body)
+  "Like `unless', but condition is always system type being windows."
+  `(unless (member system-type '(windows-nt ms-dos))
+    ,@body))
 
-;;; Configure packages to install
-(require 'crafted-completion-packages)
-(require 'crafted-evil-packages)
-(require 'crafted-ide-packages)
-(require 'crafted-lisp-packages)
-(require 'crafted-org-packages)
+;;; Packages
 
-;;;; Additional packages for custom modules
-;; judy-keys
+;;;; Pre-Emacs 29 compat
+(when (and (version< emacs-version "29")
+           (not (require 'compat nil :noerror))
+           (add-to-list 'package-selected-packages 'compat)))
+
+;;;; evil
+(add-to-list 'package-selected-packages 'evil)
+(add-to-list 'package-selected-packages 'evil-collection)
+(add-to-list 'package-selected-packages 'evil-surround)
+
+;; Leader Key setup
 (add-to-list 'package-selected-packages 'general)
 (add-to-list 'package-selected-packages 'which-key)
 
-;; judy-theme
+;;;; Completion
+(add-to-list 'package-selected-packages 'cape)
+(add-to-list 'package-selected-packages 'consult)
+(add-to-list 'package-selected-packages 'corfu)
+(add-to-list 'package-selected-packages 'corfu-terminal)
+(add-to-list 'package-selected-packages 'vertico)
+(add-to-list 'package-selected-packages 'marginalia)
+(add-to-list 'package-selected-packages 'orderless)
+
+;;;; General development
+(add-to-list 'package-selected-packages 'magit)
+(add-to-list 'package-selected-packages 'smartparens)
+(add-to-list 'package-selected-packages 'clang-format)
+(add-to-list 'package-selected-packages 'diff-hl)
+
+;;;; New modes
+;; Langs
+(add-to-list 'package-selected-packages 'rust-mode)
+(add-to-list 'package-selected-packages 'go-mode)
+(add-to-list 'package-selected-packages 'scad-mode)
+
+;; C/C++
+(add-to-list 'package-selected-packages 'cmake-mode)
+(add-to-list 'package-selected-packages 'c-mode)
+(add-to-list 'package-selected-packages 'c++-mode)
+
+;; Data and notes
+(add-to-list 'package-selected-packages 'yaml-mode)
+(add-to-list 'package-selected-packages 'markdown-mode)
+
+;; ...
+(add-to-list 'package-selected-packages 'web-mode)
+(add-to-list 'package-selected-packages 'js2-mode)
+(add-to-list 'package-selected-packages 'typescript-mode)
+
+;; Graphics
+(add-to-list 'package-selected-packages 'glsl-mode)
+
+;;;; Lisp
+(add-to-list 'package-selected-packages 'sly)
+(add-to-list 'package-selected-packages 'sly-asdf)
+(add-to-list 'package-selected-packages 'sly-quicklisp)
+
+;;;; Treesitter
+(when (member "TREE_SITTER" (split-string system-configuration-features))
+  (if (version< "29" emacs-version)
+      (add-to-list 'package-selected-packages 'treesit-auto)
+    (progn
+      (add-to-list 'package-selected-packages 'tree-sitter)
+      (add-to-list 'package-selected-packages 'tree-sitter-indent)
+      (add-to-list 'package-selected-packages 'tree-sitter-ispell)
+      (add-to-list 'package-selected-packages 'tree-sitter-langs))))
+
+;;;; eglot (Pre-Emacs 29)
+(when (version< emacs-version "29")
+  (add-to-list 'package-selected-packages 'eglot))
+
+;;;; dape
+(add-to-list 'package-selected-packages 'dape)
+
+;;;; org
+(add-to-list 'package-selected-packages 'org-appear)
+
+;;;; Themes
 (unless (member 'modus-vivendi (custom-available-themes))
   (add-to-list 'package-selected-packages 'modus-themes))
 (add-to-list 'package-selected-packages 'ef-themes)
 
-;; judy-evil
-(add-to-list 'package-selected-packages 'evil-surround)
-
-;; judy-term
-(if (member system-type '(windows-nt ms-dos))
-    (add-to-list 'package-selected-packages 'powershell)
+;;;; Terminal
+(unless-windows
   (add-to-list 'package-selected-packages 'vterm))
 
-;; judy-dev (also writing)
-(add-to-list 'package-selected-packages 'let-alist)
-(add-to-list 'package-selected-packages 'flycheck)
-(add-to-list 'package-selected-packages 'flymake-aspell)
-
-(add-to-list 'package-selected-packages 'magit)
-(add-to-list 'package-selected-packages 'transient)
-(add-to-list 'package-selected-packages 'xref)
-(add-to-list 'package-selected-packages 'eldoc)
-(add-to-list 'package-selected-packages 'smartparens)
-(add-to-list 'package-selected-packages 'diff-hl)
-
-(add-to-list 'package-selected-packages 'markdown-mode)
-
-;; Programming modes
-(add-to-list 'package-selected-packages 'glsl-mode)
-(add-to-list 'package-selected-packages 'clang-format)
-(add-to-list 'package-selected-packages 'cmake-mode)
-(add-to-list 'package-selected-packages 'rust-mode)
-(add-to-list 'package-selected-packages 'web-mode)
-(add-to-list 'package-selected-packages 'yaml-mode)
-(add-to-list 'package-selected-packages 'scad-mode)
-(add-to-list 'package-selected-packages 'arduino-mode)
-(add-to-list 'package-selected-packages 'arduino-cli-mode)
-(add-to-list 'package-selected-packages 'dockerfile-mode)
-
 ;;; Install packages
+(customize-set-variable 'package-install-upgrade-built-in t)
 (package-install-selected-packages :no-confirm)
 
-;;; Load configuration
-(require 'crafted-defaults-config)
-(require 'crafted-completion-config)
-(require 'crafted-evil-config)
-(require 'crafted-ide-config)
-(crafted-ide-configure-tree-sitter '(protobuf))
-(require 'crafted-lisp-config)
-(require 'crafted-org-config)
-(customize-set-variable 'crafted-startup-module-list
-                        '(crafted-startup-recentf crafted-startup-projects))
-(require 'crafted-startup-config)
+;;; Configuration
+;;;; Visual configuration
+(require 'judy-ui)
+(my/initialize-fonts 250)
+(unless-windows
+  (my/transparency-init 85))
 
-;; Custom modules
-(require 'judy-completion)
+;; Custom startup screen
+(require 'judy-startup)
+(my/use-custom-startup-screen)
+
+;;;; General editor config
 (require 'judy-defaults)
-(require 'judy-dev)
-(require 'judy-evil)
-(require 'judy-fonts)
-(require 'judy-keys)
-(require 'judy-org)
+(require 'judy-vim)
+(require 'judy-completion)
+
+;; Dev, note-taking and terms
 (require 'judy-term)
-(require 'judy-theme)
-(require 'judy-transparency)
-(judy-transparency-init 85)
+(require 'judy-notes)
+(require 'judy-dev)
 
 ;;; _
 (provide 'init)
