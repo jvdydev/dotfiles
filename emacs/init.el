@@ -77,6 +77,9 @@
 (add-to-list 'package-selected-packages 'sly-asdf)
 (add-to-list 'package-selected-packages 'sly-quicklisp)
 
+;;;; Highlight notes etc.
+(add-to-list 'package-selected-packages 'hl-todo)
+
 ;;;; Treesitter
 (when (member "TREE_SITTER" (split-string system-configuration-features))
   (if (version< "29" emacs-version)
@@ -127,6 +130,7 @@
 (require 'judy-completion)
 
 ;; Dev, note-taking and terms
+(global-hl-todo-mode)
 (require 'judy-term)
 (require 'judy-notes)
 (require 'judy-dev)
