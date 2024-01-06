@@ -1,3 +1,4 @@
+# -*- mode: sh; -*-
 # List Aliases
 if which exa 2>&1 >/dev/null; then
     # Use exa if available
@@ -26,23 +27,20 @@ alias grep='grep --color=auto'
 alias df='df -h'
 alias free='free -m'
 
-# YoutubeDL
-alias ytdl='youtube-dl -ic --add-metadata --embed-subs --all-subs'
-
 # Common Lisp REPLs
-if which sbcl 2>&1 >/dev/null; then
-    alias sbcl='rlwrap sbcl'
+if which rlwrap 2>&1 >/dev/null; then
+    # Shortcuts for SBCL
+    if which sbcl 2>&1 >/dev/null; then
+        alias sbcl='rlwrap sbcl'
+        alias cl='rlwrap sbcl'
+    fi
 
+    # Override with roswell if available
     if which ros 2>&1 >/dev/null; then
         alias rosrun='rlwrap ros run'
         alias cl='rlwrap ros run'
     fi
-else
-    alias cl='sbcl'
 fi
 
 # Make
 alias pmake='time nice make -j$(nproc) --load-average=$(nproc)'
-
-# Hyprland blue-light shader
-alias bls='hyprctl keyword decoration:screen_shader ~/.config/hypr/blue-light-filter.glsl'
