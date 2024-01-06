@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+# -*- coding: utf-8 -*-
+
+# Set up env vars for fcitx
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
+# If no first argument, use wayland
+if [ -z "$1" ]; then
+    sway
+else
+    i3
+fi

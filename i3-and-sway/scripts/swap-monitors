@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# -*- coding: utf-8 -*-
+
+# Inspired by https://tangledwire.org/2020/03/30/swap-your-workspaces-in-sway/
+
+# Dispatch for sway/i3
+if [ -z "${WAYLAND_DISPLAY}" ]; then
+    MSG=i3msg
+else
+    MSG=swaymsg
+fi
+
+workspace_list=$($MSG -p -t get_workspaces | grep Workspace)
+all_workspaces=$(echo "${workspace_list}" | sed -e 's,^Workspace \([0-9]*\).*,\1,')
+focused_workspace=$(echo "${workspace_list}" | grep focused | sed -e 's,^Workspace \([0-9]*\).*,\1,')
+
+for workspace in ${all_workspaces}; do
+  $MSG workspace "${workspace}"
+  $MSG move workspace to output right
+done
+
+$MSG workspace "${focused_workspace}"

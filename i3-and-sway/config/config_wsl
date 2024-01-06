@@ -1,0 +1,6 @@
+# -*- mode: conf; -*-
+
+# WSL specific configuration
+include config_base
+
+# TBD
