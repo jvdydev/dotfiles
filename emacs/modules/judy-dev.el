@@ -14,6 +14,9 @@
 
 (customize-set-variable 'compilation-scroll-output t)
 
+;; Use magit-show-commit to display diffs
+(customize-set-variable 'consult-git-log-grep-open-function #'magit-show-commit)
+
 ;;;; Tree-Sitter/LSP
 (customize-set-variable 'eglot-autoshutdown t)
 
@@ -25,6 +28,7 @@
   (treesit-auto-add-to-auto-mode-alist))
 
 ;;; C/C++
+(add-to-list 'auto-mode-alist '("\\.clang-format\\'" . yaml-mode))
 
 (when (fboundp 'c-ts-mode)
   (customize-set-variable 'c-ts-mode-indent-offset 4))
@@ -64,6 +68,9 @@ Useful when multiple rust projects reside in the same VC repo."
   (customize-set-variable 'web-mode-css-indent-offset 2)
   (customize-set-variable 'web-mode-code-indent-offset 2)
   (customize-set-variable 'web-mode-indent-style 2))
+
+;;; .NET
+(add-to-list 'auto-mode-alist '("\\.csproj\\'" . xml-mode))
 
 ;;; _
 (provide 'judy-dev)

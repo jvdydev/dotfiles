@@ -37,6 +37,7 @@
 ;;;; Completion
 (add-to-list 'package-selected-packages 'cape)
 (add-to-list 'package-selected-packages 'consult)
+(add-to-list 'package-selected-packages 'consult-git-log-grep)
 (add-to-list 'package-selected-packages 'corfu)
 (add-to-list 'package-selected-packages 'corfu-terminal)
 (add-to-list 'package-selected-packages 'vertico)
@@ -46,7 +47,6 @@
 ;;;; General development
 (add-to-list 'package-selected-packages 'magit)
 (add-to-list 'package-selected-packages 'smartparens)
-(add-to-list 'package-selected-packages 'clang-format)
 (add-to-list 'package-selected-packages 'diff-hl)
 
 ;;;; New modes
@@ -56,18 +56,9 @@
 (add-to-list 'package-selected-packages 'scad-mode)
 
 ;; C/C++
-(add-to-list 'package-selected-packages 'cmake-mode)
 (add-to-list 'package-selected-packages 'c-mode)
 (add-to-list 'package-selected-packages 'c++-mode)
-
-;; Data and notes
-(add-to-list 'package-selected-packages 'yaml-mode)
-(add-to-list 'package-selected-packages 'markdown-mode)
-
-;; ...
-(add-to-list 'package-selected-packages 'web-mode)
-(add-to-list 'package-selected-packages 'js2-mode)
-(add-to-list 'package-selected-packages 'typescript-mode)
+(add-to-list 'package-selected-packages 'cmake-mode)
 
 ;; Graphics
 (add-to-list 'package-selected-packages 'glsl-mode)
@@ -77,8 +68,24 @@
 (add-to-list 'package-selected-packages 'sly-asdf)
 (add-to-list 'package-selected-packages 'sly-quicklisp)
 
-;;;; Highlight notes etc.
+;; Data and notes
+(add-to-list 'package-selected-packages 'yaml-mode)
+(add-to-list 'package-selected-packages 'markdown-mode)
 (add-to-list 'package-selected-packages 'hl-todo)
+
+;; Web
+(add-to-list 'package-selected-packages 'web-mode)
+(add-to-list 'package-selected-packages 'js2-mode)
+(add-to-list 'package-selected-packages 'typescript-mode)
+(add-to-list 'package-selected-packages 'ng2-mode)
+
+;; .NET
+(when (version< "29" emacs-version)
+  (add-to-list 'package-selected-packages 'csharp-mode))
+
+;; Docker/Podman
+(add-to-list 'package-selected-packages 'dockerfile-mode)
+(add-to-list 'package-selected-packages 'docker-compose-mode)
 
 ;;;; Treesitter
 (when (member "TREE_SITTER" (split-string system-configuration-features))
@@ -93,9 +100,6 @@
 ;;;; eglot (Pre-Emacs 29)
 (when (version< emacs-version "29")
   (add-to-list 'package-selected-packages 'eglot))
-
-;;;; dape
-(add-to-list 'package-selected-packages 'dape)
 
 ;;;; org
 (add-to-list 'package-selected-packages 'org-appear)
