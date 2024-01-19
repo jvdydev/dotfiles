@@ -12,12 +12,7 @@
 (add-hook 'prog-mode-hook #'turn-on-diff-hl-mode)
 (add-hook 'vc-dir-mode-hook #'turn-on-diff-hl-mode)
 
-(defun my/eglot-disable-inlay-hints (_ignored)
-  "Disable eglot inlay hints mode."
-  (eglot-inlay-hints-mode -1))
-
 (customize-set-variable 'compilation-scroll-output t)
-(add-hook 'eglot-connect-hook #'my/eglot-disable-inlay-hints)
 
 ;;;; Tree-Sitter/LSP
 (customize-set-variable 'eglot-autoshutdown t)
@@ -29,33 +24,7 @@
   (treesit-auto-install-all)
   (treesit-auto-add-to-auto-mode-alist))
 
-;;;; DAP (dape)
-(when (require 'dape)
-  (when (executable-find "dlv")
-    (add-to-list 'dape-configs
-                 '(delve
-                   modes (go-mode go-ts-mode)
-                   command "dlv"
-                   command-args ("dap" "--listen" "127.0.0.1:55878")
-                   command-cwd dape-cwd-fn
-                   host "127.0.0.1"
-                   port 55878
-                   :type "debug"
-                   :request "launch"
-                   :cwd dape-cwd-fn
-                   :program dape-cwd-fn))))
-
 ;;; C/C++
-(defun clang-format-buffer-with-config ()
-  "Format current buffer using projects' .clang-format file."
-  (interactive)
-  (when (and (member major-mode '(c-mode c-ts-mode c++-mode c++-ts-mode))
-             (project-current)
-             (file-exists-p (expand-file-name ".clang-format"
-                                              (project-root (project-current)))))
-    (clang-format-buffer)))
-
-(add-hook 'before-save #'clang-format-buffer-with-config)
 
 (when (fboundp 'c-ts-mode)
   (customize-set-variable 'c-ts-mode-indent-offset 4))
