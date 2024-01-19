@@ -65,6 +65,17 @@ This is equivalent to running \":Ex\" in vim to open netrw."
   (interactive)
   (dired "."))
 
+(defun my/switch-to-term-or-shell ()
+  "Switch to a shell buffer."
+  (interactive)
+  (switch-to-buffer
+   (completing-read "Shell Buffer: "
+                    (mapcar #'buffer-name
+                            (cl-remove-if-not (lambda (b)
+                                                (member (buffer-local-value 'major-mode b)
+                                                        '(eshell-mode shell-mode vterm-mode term-mode)))
+                                              (buffer-list))))))
+
 (judy-leader-key
   "b" '(:ignore t :which-key "buffer")
   "bb" '(switch-to-buffer :which-key "Switch to buffer")
@@ -85,9 +96,14 @@ This is equivalent to running \":Ex\" in vim to open netrw."
   "g" '(:ignore t :which-key "git")
   "gs" '(magit-status :which-key "Open magit status for current repo")
 
-  "t" '(:ignore t :which-key "term")
+  "s" '(:ignore t :which-key "Switching")
+  "sb" '(switch-to-buffer :which-key "Switch to buffer")
+  "st" '(my/switch-to-term-or-shell :which-key "Switch to term/shell")
+
+  "t" '(:ignore t :which-key "terms and shells")
   "te" '(eshell :which-key "Open EShell")
   "tv" '(vterm :which-key "Open vterm")
+  "ta" '(async-shell-command :which-key "Async shell command")
 
   "p" '(:ignore t :which-key "programming")
   "pm" '(evil-make :which-key "evil-make")
