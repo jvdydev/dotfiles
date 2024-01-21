@@ -104,6 +104,7 @@ This is equivalent to running \":Ex\" in vim to open netrw."
   "te" '(eshell :which-key "Open EShell")
   "tv" '(vterm :which-key "Open vterm")
   "ta" '(async-shell-command :which-key "Async shell command")
+  "tc" '(compile :which-key "Async shell command")
 
   "p" '(:ignore t :which-key "programming")
   "pm" '(evil-make :which-key "evil-make")
