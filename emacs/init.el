@@ -35,11 +35,8 @@
 (add-to-list 'package-selected-packages 'which-key)
 
 ;;;; Completion
-(add-to-list 'package-selected-packages 'cape)
 (add-to-list 'package-selected-packages 'consult)
 (add-to-list 'package-selected-packages 'consult-git-log-grep)
-(add-to-list 'package-selected-packages 'corfu)
-(add-to-list 'package-selected-packages 'corfu-terminal)
 (add-to-list 'package-selected-packages 'vertico)
 (add-to-list 'package-selected-packages 'marginalia)
 (add-to-list 'package-selected-packages 'orderless)
