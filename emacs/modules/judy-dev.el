@@ -69,6 +69,9 @@ Useful when multiple rust projects reside in the same VC repo."
   (customize-set-variable 'web-mode-code-indent-offset 2)
   (customize-set-variable 'web-mode-indent-style 2))
 
+(customize-set-variable 'css-indent-offset 2)
+(add-to-list 'auto-mode-alist '("\\.[s]?css\\'" . web-mode))
+
 ;;; .NET
 (add-to-list 'auto-mode-alist '("\\.csproj\\'" . xml-mode))
 
