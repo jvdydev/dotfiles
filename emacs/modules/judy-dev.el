@@ -30,6 +30,20 @@
   (treesit-auto-install-all)
   (treesit-auto-add-to-auto-mode-alist))
 
+;;;; CTAGS
+(defun build-ctags ()
+  "Build CTAGS for the current project (C lang)."
+  (interactive)
+  (unless (executable-find "ctags")
+    (user-error "Please install the CTAGS application (and ensure it's on PATH)"))
+  (let ((default-directory (project-root (project-current)))
+        ;; Avoid async-shell-command buffer ruining the layout here
+        (display-buffer-alist (list (cons "\\*Async Shell Command\\*.*"
+                                          (cons #'display-buffer-no-window nil)))))
+    (if default-directory
+        (async-shell-command "ctags -e -R")
+        (user-error "Not in a project"))))
+
 ;;; C/C++
 (add-to-list 'auto-mode-alist '("\\.clang-format\\'" . yaml-mode))
 
