@@ -9,6 +9,8 @@ else
 fi
 alias lla='ll -a'
 
+alias gtree='tree --gitignore'
+
 # Adding on interactivity
 alias rm='rm -i'
 alias mv='mv -i'
