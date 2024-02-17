@@ -32,7 +32,7 @@
 
 ;;;; CTAGS
 (defun build-ctags ()
-  "Build CTAGS for the current project (C lang)."
+  "Build CTAGS for the current project."
   (interactive)
   (unless (executable-find "ctags")
     (user-error "Please install the CTAGS application (and ensure it's on PATH)"))
