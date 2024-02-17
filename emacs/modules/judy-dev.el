@@ -20,6 +20,9 @@
 ;;;; Tree-Sitter/LSP
 (customize-set-variable 'eglot-autoshutdown t)
 
+;; Disable inlay hints
+(customize-set-variable 'eglot-ignored-server-capabilities '(:inlayHintProvider))
+
 (when (and (member "TREE_SITTER" (split-string system-configuration-features))
            (version< "29" emacs-version))
   (require 'treesit-auto)
