@@ -16,7 +16,13 @@
 (defmacro unless-windows (&rest body)
   "Like `unless', but condition is always system type being windows."
   `(unless (member system-type '(windows-nt ms-dos))
-    ,@body))
+     ,@body))
+
+(defmacro ensure-tool-present (tool)
+  "Ensure TOOL is installed and available on PATH.
+Otherwise, show a `user-error'."
+  `(unless (executable-find ,tool)
+     (user-error "Please install the %s application (and ensure it's on PATH)" ,tool)))
 
 ;;; Packages
 

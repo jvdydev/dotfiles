@@ -34,8 +34,7 @@
 (defun build-ctags ()
   "Build CTAGS for the current project."
   (interactive)
-  (unless (executable-find "ctags")
-    (user-error "Please install the CTAGS application (and ensure it's on PATH)"))
+  (ensure-tool-present "ctags")
   (let ((default-directory (project-root (project-current)))
         ;; Avoid async-shell-command buffer ruining the layout here
         (display-buffer-alist (list (cons "\\*Async Shell Command\\*.*"
@@ -49,6 +48,20 @@
 
 (when (fboundp 'c-ts-mode)
   (customize-set-variable 'c-ts-mode-indent-offset 4))
+
+(defun clang-format-project ()
+  "Format everything in the current project using clang-format."
+  (interactive)
+  (ensure-tool-present "find")
+  (ensure-tool-present "xargs")
+  (ensure-tool-present "clang-format")
+  (let ((default-directory (project-root (project-current)))
+        (display-buffer-alist (list (cons "\\*Async Shell Command\\*.*"
+                                          (cons #'display-buffer-no-window nil)))))
+    (save-some-buffers nil (lambda () (string-equal (project-root (project-current)) default-directory)))
+    (if default-directory
+        (async-shell-command "find . -type f -iname *.c -o -iname *.h -o -iname *.cpp | xargs clang-format -i")
+        (user-error "Not in a project"))))
 
 ;;; Rust
 (customize-set-variable 'rust-format-on-save t)
