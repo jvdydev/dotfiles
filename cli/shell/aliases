@@ -46,3 +46,6 @@ fi
 
 # Make
 alias pmake='time nice make -j$(nproc) --load-average=$(nproc)'
+
+# virt-viewer
+alias vm-viewer='virt-viewer --connect qemu:///system domain'
