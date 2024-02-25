@@ -18,6 +18,11 @@
   `(unless (member system-type '(windows-nt ms-dos))
      ,@body))
 
+(defmacro when-windows (&rest body)
+  "Like `when', but condition is always system type being windows."
+  `(when (member system-type '(windows-nt ms-dos))
+     ,@body))
+
 (defmacro ensure-tool-present (tool)
   "Ensure TOOL is installed and available on PATH.
 Otherwise, show a `user-error'."

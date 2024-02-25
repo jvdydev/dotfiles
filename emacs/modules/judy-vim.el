@@ -106,6 +106,11 @@ This is equivalent to running \":Ex\" in vim to open netrw."
   "ta" '(async-shell-command :which-key "Async shell command")
   "tc" '(compile :which-key "Async shell command")
 
+  "o" '(:ignore t :which-key "org-mode")
+  "od" '(org-agenda :which-key "org-agenda dispatch")
+  "or" '(org-refile :which-key "refile")
+  "oa" '(org-archive-subtree :which-key "archive subtree")
+
   "p" '(:ignore t :which-key "programming")
   "pm" '(evil-make :which-key "evil-make")
   "pe" '(eglot :which-key "Start eglot")

@@ -49,6 +49,12 @@
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
+;;; org-agenda
+(require 'org-agenda)
+
+(unless-windows
+ (pushnew "~/notes/" org-agenda-files :test #'string-equal))
+
 ;;; _
 (provide 'judy-notes)
 ;;; judy-notes.el ends here
