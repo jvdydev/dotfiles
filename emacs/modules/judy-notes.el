@@ -53,7 +53,7 @@
 (require 'org-agenda)
 
 (unless-windows
- (pushnew "~/notes/" org-agenda-files :test #'string-equal))
+ (cl-pushnew "~/notes/" org-agenda-files :test #'string-equal))
 
 ;;; _
 (provide 'judy-notes)
