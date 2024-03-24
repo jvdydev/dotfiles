@@ -12,3 +12,5 @@ export BG_SETTER="/usr/bin/feh --no-fehbg --bg-max"
 
 # Disable .NET cli telemetry
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+eval $(opam env)
