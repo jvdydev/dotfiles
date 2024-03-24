@@ -19,6 +19,7 @@
 
 ;;;; Tree-Sitter/LSP
 (customize-set-variable 'eglot-autoshutdown t)
+(add-hook 'before-save-hook #'eglot-format-buffer)
 
 ;; Disable inlay hints
 (customize-set-variable 'eglot-ignored-server-capabilities '(:inlayHintProvider))
@@ -76,6 +77,16 @@ Useful when multiple rust projects reside in the same VC repo."
 
 (add-hook 'project-find-functions #'my/dev--project-find-rust-project)
 
+;;; ML languages
+;;;; OCaml
+(add-to-list 'load-path "/home/judy/.opam/default/share/emacs/site-lisp")
+(require 'ocp-indent)
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(ocaml-ts-mode . ("ocamllsp" "--stdio"))))
+
+;;;; FSharp
+
 ;;; Lisp
 (require 'outline)
 (define-key outline-minor-mode-map (kbd "<backtab>") #'outline-cycle)
@@ -102,7 +113,7 @@ Useful when multiple rust projects reside in the same VC repo."
 (customize-set-variable 'css-indent-offset 2)
 (add-to-list 'auto-mode-alist '("\\.[s]?css\\'" . web-mode))
 
-;;; .NET
+;;; C#
 (add-to-list 'auto-mode-alist '("\\.csproj\\'" . xml-mode))
 
 ;;; _

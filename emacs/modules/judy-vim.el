@@ -78,10 +78,8 @@ This is equivalent to running \":Ex\" in vim to open netrw."
 
 (judy-leader-key
   "b" '(:ignore t :which-key "buffer")
-  "bb" '(switch-to-buffer :which-key "Switch to buffer")
+  "bs" '(switch-to-buffer :which-key "Switch to buffer")
   "bk" '(kill-current-buffer :which-key "Kill the current Buffer")
-  "<" '(switch-to-buffer :which-key "Switch to buffer") ; ISO layout
-  "z" '(switch-to-buffer :which-key "Switch to buffer") ; US layout
 
   "d" '(:ignore t :which-key "Dired")
   "dd" '(my/dired-current-buffer :which-key "Current directory")

@@ -58,15 +58,20 @@ Otherwise, show a `user-error'."
 (add-to-list 'package-selected-packages 'diff-hl)
 
 ;;;; New modes
-;; Langs
-(add-to-list 'package-selected-packages 'rust-mode)
-(add-to-list 'package-selected-packages 'go-mode)
-(add-to-list 'package-selected-packages 'scad-mode)
-
-;; C/C++
+;; Programming Language modes
 (add-to-list 'package-selected-packages 'c-mode)
 (add-to-list 'package-selected-packages 'c++-mode)
+(add-to-list 'package-selected-packages 'zig-mode)
+(add-to-list 'package-selected-packages 'rust-mode)
+(add-to-list 'package-selected-packages 'go-mode)
+(add-to-list 'package-selected-packages 'ocaml-ts-mode)
+
+;; Tooling Modes
 (add-to-list 'package-selected-packages 'cmake-mode)
+(add-to-list 'package-selected-packages 'ocamlformat)
+
+;; Models
+(add-to-list 'package-selected-packages 'scad-mode)
 
 ;; Graphics
 (add-to-list 'package-selected-packages 'glsl-mode)
@@ -90,6 +95,7 @@ Otherwise, show a `user-error'."
 ;; .NET
 (when (version< "29" emacs-version)
   (add-to-list 'package-selected-packages 'csharp-mode))
+(add-to-list 'package-selected-packages 'fsharp-mode)
 
 ;; Docker/Podman
 (add-to-list 'package-selected-packages 'dockerfile-mode)
