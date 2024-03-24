@@ -9,7 +9,7 @@ include config_base
 
 # Note: swaymsg -t get_outputs
 output HDMI-A-2 resolution 3840x2160 position 0,0
-output DP-1 resolution 1920x1280 position 3840,0
+output DP-1 resolution 1920x1280 position 3840,0 transform 90
 
 ##########
 # INPUTS #
@@ -21,6 +21,7 @@ output DP-1 resolution 1920x1280 position 3840,0
 # Generic Logitech keyboard
 input "1133:49948:Logitech_USB_Keyboard" {
       xkb_layout "de"
+      xkb_options "ctrl:nocaps,ctrl:swapcaps"
 }
 
 ###################
