@@ -26,8 +26,13 @@
  (customize-set-variable 'css-indent-offset 2)
  (add-to-list 'auto-mode-alist '("\\.[s]?css\\'" . web-mode))
 
- ;; TODO Eglot integration
-
+ (defun my/dev--project-find-web-project (dir)
+   "Find java-/typescript project by package.json instead of VC."
+   (let ((override (locate-dominating-file dir "package.json")))
+     (if override
+         (list 'vc 'Git override)
+       nil)))
+ (add-hook 'project-find-functions #'my/dev--project-find-web-project)
  )
 
 ;;; _
