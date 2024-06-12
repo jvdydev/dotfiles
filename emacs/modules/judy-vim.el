@@ -71,16 +71,38 @@ This is equivalent to running \":Ex\" in vim to open netrw."
    (interactive)
    (dired "."))
 
+ (defun my/switch-to-buffer-by-predicate (prompt predicate)
+   "Switch to a buffer with interactive selection.
+The list is pre-filtered by `predicate'."
+   (switch-to-buffer
+    (completing-read prompt
+                     (mapcar #'buffer-name
+                             (cl-remove-if-not predicate (buffer-list))))))
+ 
  (defun my/switch-to-term-or-shell ()
    "Switch to a shell buffer."
    (interactive)
-   (switch-to-buffer
-    (completing-read "Shell Buffer: "
-                     (mapcar #'buffer-name
-                             (cl-remove-if-not (lambda (b)
-                                                 (member (buffer-local-value 'major-mode b)
-                                                         '(eshell-mode shell-mode vterm-mode term-mode)))
-                                               (buffer-list))))))
+   (my/switch-to-buffer-by-predicate
+    "Shell Buffer: "
+     (lambda (b)
+       (member (buffer-local-value 'major-mode b)
+               '(eshell-mode shell-mode vterm-mode term-mode)))))
+
+ (defun my/switch-to-magit-status ()
+    "Switch to a magit-status buffer."
+    (interactive)
+    (my/switch-to-buffer-by-predicate
+     "magit Buffer: "
+     (lambda (b)
+       (eq (buffer-local-value 'major-mode b)
+           'magit-status-mode))))
+
+ (defun my/compile ()
+   "Call `recompile' if available or `compile' otherwise."
+   (interactive)
+   (if (fboundp 'recompile)
+       (recompile)
+     (call-interactively #'compile)))
 
  (judy-leader-key
    "b" '(:ignore t :which-key "buffer")
@@ -99,16 +121,13 @@ This is equivalent to running \":Ex\" in vim to open netrw."
 
    "g" '(:ignore t :which-key "git")
    "gs" '(magit-status :which-key "Open magit status for current repo")
-
-   "s" '(:ignore t :which-key "Switching")
-   "sb" '(switch-to-buffer :which-key "Switch to buffer")
-   "st" '(my/switch-to-term-or-shell :which-key "Switch to term/shell")
+   "gb" '(my/switch-to-magit-status :which-key "Switch to open magit buffer")
 
    "t" '(:ignore t :which-key "terms and shells")
    "te" '(eshell :which-key "Open EShell")
    "tv" '(vterm :which-key "Open vterm")
    "ta" '(async-shell-command :which-key "Async shell command")
-   "tc" '(compile :which-key "Async shell command")
+   "ts" '(my/switch-to-term-or-shell :which-key "Switch to term/shell")
 
    "o" '(:ignore t :which-key "org-mode")
    "od" '(org-agenda :which-key "org-agenda dispatch")
@@ -116,7 +135,7 @@ This is equivalent to running \":Ex\" in vim to open netrw."
    "oa" '(org-archive-subtree :which-key "archive subtree")
 
    "p" '(:ignore t :which-key "programming")
-   "pm" '(evil-make :which-key "evil-make")
+   "pm" '(my/compile :which-key "(re-)compile")
    "pe" '(eglot :which-key "Start eglot")
    "pr" '(eglot-rename :which-key "rename")
    "pf" '(project-find-file :which-key "Find file"))
