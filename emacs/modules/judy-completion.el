@@ -6,31 +6,37 @@
 
 ;;; Code:
 
-;;; vertico
-(require 'vertico)
-(require 'vertico-directory)
+;;; Packages
+(add-to-list 'package-selected-packages 'consult)
+(add-to-list 'package-selected-packages 'vertico)
+(add-to-list 'package-selected-packages 'marginalia)
+(add-to-list 'package-selected-packages 'orderless)
 
-;; Better ergonomics
-(customize-set-variable 'vertico-cycle t)
-(define-key vertico-map (kbd "C-<backspace>") #'vertico-directory-delete-word)
+;;; Package Configuration
+(my/post-install-run
+ ;; vertico
+ (require 'vertico)
+ (require 'vertico-directory)
 
-(vertico-mode 1)
+ (customize-set-variable 'vertico-cycle t)
+ (define-key vertico-map (kbd "C-<backspace>") #'vertico-directory-delete-word)
+ (vertico-mode 1)
 
-;;; Marginalia
-(require 'marginalia)
-(marginalia-mode 1)
+ ;; Marginalia
+ (require 'marginalia)
+ (marginalia-mode 1)
 
-;;; Consult
-(keymap-global-set "C-s" 'consult-line)
-(setq completion-in-region-function #'consult-completion-in-region)
+ ;; Consult
+ (keymap-global-set "C-s" 'consult-line)
+ (setq completion-in-region-function #'consult-completion-in-region)
 
-;;; orderless
-(require 'orderless)
-(customize-set-variable 'completion-styles '(orderless flex basic))
-(customize-set-variable 'completion-category-overrides
-                        '((file (styles . (partial-completion)))))
-(customize-set-variable 'completions-detailed t)
-(customize-set-variable 'tab-always-indent 'complete)
+ ;; orderless
+ (require 'orderless)
+ (customize-set-variable 'completion-styles '(orderless flex basic))
+ (customize-set-variable 'completion-category-overrides
+                         '((file (styles . (partial-completion)))))
+ (customize-set-variable 'completions-detailed t)
+ (customize-set-variable 'tab-always-indent 'complete))
 
 ;;; _
 (provide 'judy-completion)

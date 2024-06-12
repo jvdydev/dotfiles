@@ -33,7 +33,7 @@
 
 (package-initialize)
 (unless package-archive-contents
-    (package-refresh-contents))
+  (package-refresh-contents))
 
 ;;; (Native) Compilation and loading
 (when (featurep 'native-compile)

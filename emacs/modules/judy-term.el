@@ -1,18 +1,22 @@
-;;; judy-term.el --- Terminal and Shell configuration -*- lexical-binding: t; -*-
+;;; judy-term.el --- Term and Shell configuration -*- lexical-binding: t; -*-
 ;;; Commentary:
 
-;; Minimal terminal configs (vterm, term, eshell).
+;; Terminal > GUI
 
 ;;; Code:
 
-;;; term/vterm
+;;; Packages
 (unless-windows
+ (add-to-list 'package-selected-packages 'vterm))
+
+;;; Configuration
+(my/post-install-run
+ (unless-windows
   (setq explicit-shell-file-name "bash")
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
   (setq vterm-max-scrollback 10000))
 
-;; eshell
-(require 'eshell)
+ (require 'eshell))
 
 ;;; _
 (provide 'judy-term)
