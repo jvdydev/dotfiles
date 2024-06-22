@@ -38,8 +38,7 @@ Otherwise, show a `user-error'."
 (require 'judy-defaults)
 
 ;;; Init
-
-;;;; Require modules
+;;;; Load modules
 (require 'judy-vim)
 (require 'judy-completion)
 (require 'judy-ui)

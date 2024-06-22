@@ -22,6 +22,8 @@
 (when (version< emacs-version "29")
   (add-to-list 'package-selected-packages 'eglot))
 
+(add-to-list 'package-selected-packages 'visual-fill-column)
+
 ;;; Configuration
 (my/post-install-run
  ;; Parens managment
@@ -48,6 +50,10 @@
    (global-treesit-auto-mode)
    (treesit-auto-install-all)
    (treesit-auto-add-to-auto-mode-alist))
+
+ ;; visual fill column
+ (customize-set-variable 'visual-fill-column-center-text t)
+ (customize-set-variable 'visual-fill-column-width 100)
 
  ;; CTAGS
  (defun build-ctags ()
