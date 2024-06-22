@@ -40,7 +40,6 @@
 
  ;; Tree-Sitter/LSP
  (customize-set-variable 'eglot-autoshutdown t)
- (add-hook 'before-save-hook #'eglot-format-buffer)
  (customize-set-variable 'eglot-ignored-server-capabilities '(:inlayHintProvider))
 
  (when (and (member "TREE_SITTER" (split-string system-configuration-features))

@@ -33,6 +33,17 @@
          (list 'vc 'Git override)
        nil)))
  (add-hook 'project-find-functions #'my/dev--project-find-web-project)
+
+ (defun my/dev-ts-format-buffer ()
+   "Run `prettier' on all TypeScript files in the current project."
+   (interactive)
+   (ensure-tool-present "prettier")
+   (if-let ((proj (project-root (project-current))))
+       (let ((default-directory proj)
+             (display-buffer-alist (list (cons "\\*Async Shell Command\\*.*"
+                                               (cons #'display-buffer-no-window nil)))))
+         (async-shell-command "prettier -w **/*.ts"))
+     (user-error "Not in a project")))
  )
 
 ;;; _

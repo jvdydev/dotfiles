@@ -78,7 +78,7 @@ The list is pre-filtered by `predicate'."
     (completing-read prompt
                      (mapcar #'buffer-name
                              (cl-remove-if-not predicate (buffer-list))))))
- 
+
  (defun my/switch-to-term-or-shell ()
    "Switch to a shell buffer."
    (interactive)
@@ -135,6 +135,7 @@ The list is pre-filtered by `predicate'."
    "oa" '(org-archive-subtree :which-key "archive subtree")
 
    "p" '(:ignore t :which-key "programming")
+   "pc" '(compile :which-key "compile")
    "pm" '(my/compile :which-key "(re-)compile")
    "pe" '(eglot :which-key "Start eglot")
    "pr" '(eglot-rename :which-key "rename")
